@@ -50,13 +50,13 @@
             <div class="col-md-8">
                 <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Portals</h5>
+                    <h5 class="card-title" id="title-portals">Portals</h5>
                     <canvas id="chart-portals"></canvas>
                 </div>
                 </div>
                 <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Time</h5>
+                    <h5 class="card-title" id="title-time">Time Taken</h5>
                     <canvas id="chart-time"></canvas>
                 </div>
                 </div>
@@ -236,7 +236,7 @@
                 });
             }
 
-            function selectLevel(id) {
+            function selectLevel(id, name) {
                 var prefix = "https://metapyziks.github.io/portal2-histograms/data/challenge_";
 
                 if (timeChart == null) {
@@ -255,6 +255,9 @@
                         stepSize: 1
                     });
                 }
+
+                $("#title-time").text(`Time Taken - ${name}`);
+                $("#title-portals").text(`Portals - ${name}`);
 
                 updateHistogram(`${prefix}besttime_sp_${id}.json`, timeChart);
                 updateHistogram(`${prefix}portals_sp_${id}.json`, portalChart);
@@ -284,7 +287,7 @@
                         $(`#level-list-${i}`).append(
                             `<button type="button"
                                 class="btn btn-secondary"
-                                onclick="selectLevel('${level.id}'); return false;">
+                                onclick="selectLevel('${level.id}', '${level.name}'); return false;">
                                 ${level.name}
                             </button>`
                         );
