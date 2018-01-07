@@ -1,0 +1,53 @@
+{
+    "sp": [
+        {
+            "title": "The Courtesy Call",
+            "levels": [
+                { "id": "a1_intro3", "name": "Portal Gun" },
+                { "id": "a1_intro4", "name": "Smooth Jazz" },
+                { "id": "a1_intro5", "name": "Cube Momentum" },
+                { "id": "a1_intro6", "name": "Future Starter" },
+                { "id": "a2_intro", "name": "Incinerator" }
+            ]
+        },
+        {
+            "title": "The Cold Boot",
+            "levels": [
+                { "id": "a2_laser_stairs", "name": "Laser Stairs" },
+                { "id": "a2_dual_lasers", "name": "Dual Lasers" },
+                { "id": "a2_laser_over_goo", "name": "Laser Over Goo" },
+                { "id": "a2_trust_fling", "name": "Trust Fling" },
+                { "id": "a2_pit_flings", "name": "Pit Flings" },
+                { "id": "a2_fizzler_intro", "name": "Fizzler Intro" }
+            ]
+        },
+        {
+            "title": "The Return",
+            "levels": [
+                { "id": "", "name": "Ceiling Catapult" },
+                { "id": "", "name": "Ricochet" },
+                { "id": "", "name": "Bridge Intro" },
+                { "id": "", "name": "Bridge the Gap" },
+                { "id": "", "name": "Turret Intro" },
+                { "id": "", "name": "Laser Relays" },
+                { "id": "", "name": "Turret Blocker" },
+                { "id": "", "name": "Laser vs Turret" },
+                { "id": "", "name": "Pull the Rug" }
+            ]
+        }
+    ],
+
+    "mp": [
+        {
+            "title": "Team Building",
+            "levels": [
+                { "id": "?", "name": "01 Doors" },
+                { "id": "?", "name": "02 Buttons" },
+                { "id": "?", "name": "03 Lasers" },
+                { "id": "?", "name": "04 Rat Maze" },
+                { "id": "?", "name": "05 Laser Crusher" },
+                { "id": "?", "name": "06 Behind the Scenes" }
+            ]
+        }
+    ]
+}
