@@ -27,8 +27,6 @@
             }
 
             canvas {
-                width: 100%;
-                height: 256px;
                 background-color: #fff;
             }
 
@@ -51,13 +49,13 @@
                 <div class="card">
                 <div class="card-body">
                     <h5 class="card-title" id="title-portals">Portals</h5>
-                    <canvas id="chart-portals"></canvas>
+                    <canvas id="chart-portals" width="640px" height="256px"></canvas>
                 </div>
                 </div>
                 <div class="card">
                 <div class="card-body">
                     <h5 class="card-title" id="title-time">Time Taken</h5>
-                    <canvas id="chart-time"></canvas>
+                    <canvas id="chart-time" width="640px" height="256px"></canvas>
                 </div>
                 </div>
             </div>
@@ -79,106 +77,7 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 
         <script>
-            var spStages = [
-                {
-                    "title": "The Courtesy Call",
-                    "levels": [
-                        { "id": "a1_intro3", "name": "Portal Gun" },
-                        { "id": "a1_intro4", "name": "Smooth Jazz" },
-                        { "id": "a1_intro5", "name": "Cube Momentum" },
-                        { "id": "a1_intro6", "name": "Future Starter" },
-                        { "id": "a2_intro", "name": "Incinerator" }
-                    ]
-                },
-                {
-                    "title": "The Cold Boot",
-                    "levels": [
-                        { "id": "a2_laser_stairs", "name": "Laser Stairs" },
-                        { "id": "a2_dual_lasers", "name": "Dual Lasers" },
-                        { "id": "a2_laser_over_goo", "name": "Laser Over Goo" },
-                        { "id": "a2_trust_fling", "name": "Trust Fling" },
-                        { "id": "a2_pit_flings", "name": "Pit Flings" },
-                        { "id": "a2_fizzler_intro", "name": "Fizzler Intro" }
-                    ]
-                },
-                {
-                    "title": "The Return",
-                    "levels": [
-                        { "id": "a2_sphere_peek", "name": "Ceiling Catapult" },
-                        { "id": "a2_ricochet", "name": "Ricochet" },
-                        { "id": "a2_bridge_intro", "name": "Bridge Intro" },
-                        { "id": "a2_bridge_the_gap", "name": "Bridge the Gap" },
-                        { "id": "a2_turret_intro", "name": "Turret Intro" },
-                        { "id": "a2_laser_relays", "name": "Laser Relays" },
-                        { "id": "a2_turret_blocker", "name": "Turret Blocker" },
-                        { "id": "a2_laser_vs_turret", "name": "Laser vs. Turret" },
-                        { "id": "a2_pull_the_rug", "name": "Pull the Rug" }
-                    ]
-                },
-                {
-                    "title": "The Surprise",
-                    "levels": [
-                        { "id": "a2_column_blocker", "name": "Column Blocker" },
-                        { "id": "a2_laser_chaining", "name": "Laser Chaining" },
-                        { "id": "a2_triple_laser", "name": "Triple Laser" },
-                        { "id": "a2_bts1", "name": "Jail Break" },
-                        { "id": "a2_bts2", "name": "Escape" }
-                    ]
-                },
-                {
-                    "title": "The Escape",
-                    "levels": [
-                        { "id": "a2_bts3", "name": "Turret Factory" },
-                        { "id": "a2_bts4", "name": "Turret Sabotage" },
-                        { "id": "a2_bts5", "name": "Neurotoxin Sabotage" }
-                    ]
-                },
-                {
-                    "title": "The Fall",
-                    "levels": [
-                        { "id": "a3_01", "name": "Underground" },
-                        { "id": "a3_03", "name": "Cave Johnson" },
-                        { "id": "a3_jump_intro", "name": "Repulsion Intro" },
-                        { "id": "a3_bomb_flings", "name": "Bomb Flings" },
-                        { "id": "a3_crazy_box", "name": "Crazy Box" },
-                        { "id": "a3_transition01", "name": "PotatOS" }
-                    ]
-                },
-                {
-                    "title": "The Reunion",
-                    "levels": [
-                        { "id": "a3_speed_ramp", "name": "Propulsion Intro" },
-                        { "id": "a3_speed_flings", "name": "Propulsion Flings" },
-                        { "id": "a3_portal_intro", "name": "Conversion Intro" },
-                        { "id": "a3_end", "name": "Three Gels" }
-                    ]
-                },
-                {
-                    "title": "The Itch",
-                    "levels": [
-                        { "id": "a4_tb_intro", "name": "Funnel Intro" },
-                        { "id": "a4_tb_trust_drop", "name": "Ceiling Button" },
-                        { "id": "a4_tb_wall_button", "name": "Wall Button" },
-                        { "id": "a4_tb_polarity", "name": "Polarity" },
-                        { "id": "a4_tb_catch", "name": "Funnel Catch" },
-                        { "id": "a4_stop_the_box", "name": "Stop the Box" },
-                        { "id": "a4_laser_catapult", "name": "Laser Catapult" },
-                        { "id": "a4_laser_platform", "name": "Laser Platform" },
-                        { "id": "a4_speed_tb_catch", "name": "Propulsion Catch" },
-                        { "id": "a4_jump_polarity", "name": "Repulsion Polarity" }
-                    ]
-                },
-                {
-                    "title": "The Part Where...",
-                    "levels": [
-                        { "id": "a4_finale2", "name": "Finale 2" },
-                        { "id": "a4_finale3", "name": "Finale 3" },
-                        { "id": "a4_finale4", "name": "Finale 4" }
-                    ]
-                }
-            ];
-
-            function updateHistogram(url, chart)
+            function updateHistogram(url, chart, type)
             {
                 $.getJSON(url, data => {
                     var points = [];
@@ -190,13 +89,38 @@
                     if (interval !== 1) interval *= 0.01;
 
                     var total = 0;
+                    var minSkip = data.totalEntries * 0.0001;
+                    var maxSkip = data.totalEntries * 0.9;
 
-                    for (var i = 0; i < values.length; ++i) {
-                        var value = values[i];
-                        total += value;
-                        points.push({x: i * interval + minScore, y: value});
+                    if (type === "scatter") {
+                        for (var i = 0; i < values.length; ++i) {
+                            var value = values[i];
+                            total += value;
 
-                        if (total > data.totalEntries * 0.9) break;
+                            if (value < minSkip) continue;
+                            minSkip = 0;
+
+                            points.push({x: i * interval + minScore, y: value});
+
+                            if (total > maxSkip) break;
+                        }
+                    } else {
+                        var labels = [];
+
+                        for (var i = 0; i < values.length; ++i) {
+                            var value = values[i];
+                            total += value;
+
+                            if (value < minSkip) continue;
+                            minSkip = 0;
+
+                            points.push(value);
+                            labels.push(i.toString());
+
+                            if (total > maxSkip) break;
+                        }
+
+                        chart.data.labels = labels;
                     }
 
                     chart.data.datasets = [{
@@ -215,52 +139,58 @@
             var timeChart;
             var portalChart;
 
-            function createChart(canvasId, tickOptions) {
-                return new Chart(document.getElementById(canvasId).getContext('2d'), {
-                    type: 'scatter',
-                    options: {
-                        legend: {
-                            display: false
-                        },
-                        scales: {
-                            xAxes: [{
-                                type: 'linear',
-                                position: 'bottom',
-                                ticks: tickOptions
-                            }],
-                            yAxes: [{
-                                display: false
-                            }]
-                        }
-                    }
-                });
-            }
-
             function selectLevel(id, name) {
                 var prefix = "https://metapyziks.github.io/portal2-histograms/data/challenge_";
 
                 if (timeChart == null) {
-                    timeChart = createChart("chart-time", {
-                        stepSize: 5,
-                        callback: function(value, index, values) {
-                            var mins = Math.floor(value / 60);
-                            var secs = Math.floor(value - mins * 60);
-                            return (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs;
+                    timeChart = new Chart(document.getElementById("chart-time").getContext('2d'), {
+                        type: 'scatter',
+                        options: {
+                            legend: {
+                                display: false
+                            },
+                            scales: {
+                                xAxes: [{
+                                    type: 'linear',
+                                    position: 'bottom',
+                                    ticks: {
+                                        stepSize: 5,
+                                        callback: function(value, index, values) {
+                                            var mins = Math.floor(value / 60);
+                                            var secs = Math.floor(value - mins * 60);
+                                            return (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs;
+                                        }
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: false
+                                }]
+                            }
                         }
                     });
                 }
 
                 if (portalChart == null) {
-                    portalChart = createChart("chart-portals", {
-                        stepSize: 1
+                    portalChart = new Chart(document.getElementById("chart-portals").getContext('2d'), {
+                        type: 'bar',
+                        options: {
+                            legend: {
+                                display: false
+                            },
+                            scales: {
+                                yAxes: [{
+                                    display: false
+                                }]
+                            }
+                        }
                     });
                 }
 
                 $("#title-time").text(`Time Taken - ${name}`);
                 $("#title-portals").text(`Portals - ${name}`);
 
-                updateHistogram(`${prefix}besttime_sp_${id}.json`, timeChart);
-                updateHistogram(`${prefix}portals_sp_${id}.json`, portalChart);
+                updateHistogram(`${prefix}besttime_sp_${id}.json`, timeChart, "scatter");
+                updateHistogram(`${prefix}portals_sp_${id}.json`, portalChart, "bar");
             }
 
             function showLevels(stages) {
@@ -295,7 +225,9 @@
                 }
             }
 
-            showLevels(spStages);
+            $.getJSON("https://metapyziks.github.io/portal2-histograms/data/sp.json", data => {
+                showLevels(data.stages);
+            });
         </script>
     </body>
 </html>
