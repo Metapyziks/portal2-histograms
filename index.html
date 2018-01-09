@@ -14,6 +14,14 @@
             <h1>Portal 2 - Challenge Mode</h1>
             <div class="row">
             <div class="col-md-4">
+                <div class="btn-group btn-group-toggle mode-select" data-toggle="buttons">
+                    <label class="btn btn-outline-secondary active">
+                        <input type="radio" name="mode-select" id="mode-solo" value="sp" autocomplete="off" checked> Solo
+                    </label>
+                    <label class="btn btn-outline-secondary">
+                        <input type="radio" name="mode-select" id="mode-coop" value="mp" autocomplete="off"> Coop
+                    </label>
+                </div>
                 <div id="chapter-list" role="tablist">
                 </div>
             </div>
@@ -51,9 +59,7 @@
         <script src="scripts.js"></script>
 
         <script>
-            $.getJSON("https://metapyziks.github.io/portal2-histograms/data/sp.json", data => {
-                showLevels(data.stages);
-            });
+            showLevels("sp");
         </script>
     </body>
 </html>

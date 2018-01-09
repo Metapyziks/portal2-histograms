@@ -12,6 +12,14 @@ h3 {
     margin-top: 1rem;
 }
 
+.mode-select {
+    width: 100%;
+}
+
+.mode-select .btn {
+    width: 50%;
+}
+
 .card {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;

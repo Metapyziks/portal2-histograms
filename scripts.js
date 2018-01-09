@@ -114,8 +114,20 @@ function selectLevel(id, name) {
     updateHistogram(`${prefix}portals_${id}.json`, portalChart, "bar");
 }
 
+$("input[type=radio][name=mode-select]").change(function() {
+    showLevels(this.value);
+    console.log(this.value);
+});
+
 function showLevels(stages) {
     $("#chapter-list").empty();
+
+    if (typeof stages === "string") {
+        $.getJSON(`https://metapyziks.github.io/portal2-histograms/data/${stages}.json`, data => {
+            showLevels(data.stages);
+        });
+        return;
+    }
 
     for (var i = 0; i < stages.length; ++i) {
         var stage = stages[i];
@@ -137,7 +149,7 @@ function showLevels(stages) {
             var level = stage.levels[j];
             $(`#level-list-${i}`).append(
                 `<button type="button"
-                    class="btn btn-secondary"
+                    class="btn btn-outline-dark"
                     onclick="selectLevel('${level.id}', '${level.name}'); return false;">
                     ${level.name}
                 </button>`
