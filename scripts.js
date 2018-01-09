@@ -73,21 +73,21 @@ function updateHistogram(url, chart, info)
 var timeChart;
 var portalChart;
 
-var currentLevelId;
+var currentMap;
 
-function selectLevel(id, name) {
-    if (currentLevelId === id) return;
-    currentLevelId = id;
+function selectLevel(map, name) {
+    if (currentMap === map) return;
+    currentMap = map;
 
     var prefix = "https://metapyziks.github.io/portal2-histograms/data/challenge_";
 
-    var newHash = `#${id}`;
+    var newHash = `#${map}`;
     if (window.location.hash !== newHash) {
         window.location.hash = newHash;
     }
 
     $(".level-btn").removeClass("active");
-    $(`#level-btn-${id}`).addClass("active");
+    $(`#level-btn-${map}`).addClass("active");
 
     if (timeChart == null) {
         timeChart = new Chart(document.getElementById("chart-time").getContext('2d'), {
@@ -140,13 +140,13 @@ function selectLevel(id, name) {
     $("#title-time").text(`Time Taken - ${name}`);
     $("#title-portals").text(`Portals - ${name}`);
 
-    updateHistogram(`${prefix}besttime_${id}.json`, timeChart, {
+    updateHistogram(`${prefix}besttime_${map}.json`, timeChart, {
         type: "scatter",
         backgroundColor: "rgba(255, 159, 64, 0.2)",
         borderColor: "rgba(255, 159, 64, 1)",
         cardId: "card-time"
     });
-    updateHistogram(`${prefix}portals_${id}.json`, portalChart, {
+    updateHistogram(`${prefix}portals_${map}.json`, portalChart, {
         type: "bar",
         backgroundColor: "rgba(54, 162, 235, 0.2)",
         borderColor: "rgba(54, 162, 235, 1)",
@@ -202,8 +202,8 @@ function showLevels(mode, callback) {
                 $(`#level-list-${i}`).append(
                     `<button type="button"
                         class="btn btn-outline-secondary level-btn"
-                        id="level-btn-${level.id}"
-                        onclick="selectLevel('${level.id}', '${level.name}'); return false;">
+                        id="level-btn-${level.map}"
+                        onclick="selectLevel('${level.map}', '${level.name}'); return false;">
                         ${level.name}
                     </button>`
                 );
@@ -227,20 +227,20 @@ function onHashChange() {
 
     showLevels(mode, function(stages) {
         if (hash.length <= 3) return;
-        var mapId = hash.substr(1);
+        var map = hash.substr(1);
 
         for (var i = 0; i < stages.length; ++i) {
             var levels = stages[i].levels;
             var index;
 
             for (index = 0; index < levels.length; ++index) {
-                if (levels[index].id === mapId) break;
+                if (levels[index].map === map) break;
             }
 
             if (index === levels.length) continue;
 
             $(`#card-collapse-${i}`).collapse("show");
-            selectLevel(mapId, levels[index].name);
+            selectLevel(map, levels[index].name);
 
             break;
         }
