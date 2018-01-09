@@ -1,5 +1,13 @@
 function updateHistogram(url, chart, info)
 {
+    chart.data.datasets = [];
+
+    if (info.type === "bar") {
+        chart.data.labels = [];
+    }
+    
+    chart.update();
+
     $.getJSON(url, data => {
         var points = [];
         var values = data.values;
@@ -57,6 +65,8 @@ function updateHistogram(url, chart, info)
         }]
 
         chart.update();
+
+        $(`#${info.cardId}`).collapse("show");
     });
 }
 
@@ -115,6 +125,10 @@ function selectLevel(id, name) {
                     display: false
                 },
                 scales: {
+                    xAxes: [{
+                        barPercentage: 0.9,
+                        categoryPercentage: 1.0
+                    }],
                     yAxes: [{
                         display: false
                     }]
@@ -129,12 +143,14 @@ function selectLevel(id, name) {
     updateHistogram(`${prefix}besttime_${id}.json`, timeChart, {
         type: "scatter",
         backgroundColor: "rgba(255, 159, 64, 0.2)",
-        borderColor: "rgba(255, 159, 64, 1)"
+        borderColor: "rgba(255, 159, 64, 1)",
+        cardId: "card-time"
     });
     updateHistogram(`${prefix}portals_${id}.json`, portalChart, {
         type: "bar",
         backgroundColor: "rgba(54, 162, 235, 0.2)",
-        borderColor: "rgba(54, 162, 235, 1)"
+        borderColor: "rgba(54, 162, 235, 1)",
+        cardId: "card-portals"
     });
 }
 
@@ -234,9 +250,4 @@ function onHashChange() {
 }
 
 $(window).on("hashchange", onHashChange);
-
-$(function() {
-    if (!onHashChange()) {
-        showLevels("sp");
-    }
-});
+$(onHashChange);
