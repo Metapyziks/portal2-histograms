@@ -1,4 +1,4 @@
-function updateHistogram(url, chart, type)
+function updateHistogram(url, chart, info)
 {
     $.getJSON(url, data => {
         var points = [];
@@ -13,12 +13,12 @@ function updateHistogram(url, chart, type)
         var minSkip = data.totalEntries * 0.0001;
         var maxSkip = data.totalEntries * 0.9;
 
-        if (type === "scatter") {
+        if (info.type === "scatter") {
             for (var i = 0; i < values.length; ++i) {
                 var value = values[i];
                 total += value;
 
-                if (value < minSkip) continue;
+                if (total < minSkip) continue;
                 minSkip = 0;
 
                 points.push({x: i * interval + minScore, y: value});
@@ -50,6 +50,9 @@ function updateHistogram(url, chart, type)
             pointRadius: 0,
             showLine: true,
             cubicInterpolationMode: 'monotone',
+            backgroundColor: info.backgroundColor,
+            borderColor: info.borderColor,
+            borderWidth: 1,
             data: points
         }]
 
@@ -123,8 +126,16 @@ function selectLevel(id, name) {
     $("#title-time").text(`Time Taken - ${name}`);
     $("#title-portals").text(`Portals - ${name}`);
 
-    updateHistogram(`${prefix}besttime_${id}.json`, timeChart, "scatter");
-    updateHistogram(`${prefix}portals_${id}.json`, portalChart, "bar");
+    updateHistogram(`${prefix}besttime_${id}.json`, timeChart, {
+        type: "scatter",
+        backgroundColor: "rgba(255, 159, 64, 0.2)",
+        borderColor: "rgba(255, 159, 64, 1)"
+    });
+    updateHistogram(`${prefix}portals_${id}.json`, portalChart, {
+        type: "bar",
+        backgroundColor: "rgba(54, 162, 235, 0.2)",
+        borderColor: "rgba(54, 162, 235, 1)"
+    });
 }
 
 $("input[type=radio][name=mode-select]").change(function() {
