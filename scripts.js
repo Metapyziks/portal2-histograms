@@ -5,7 +5,7 @@ function updateHistogram(url, chart, info)
     if (info.type === "bar") {
         chart.data.labels = [];
     }
-    
+
     chart.update();
 
     $.getJSON(url, data => {
@@ -68,6 +68,12 @@ function updateHistogram(url, chart, info)
 
         $(`#${info.cardId}`).collapse("show");
     });
+
+    if (currentPlayer != null) {
+        $.get(`http://steamcommunity.com/${currentPlayer}/stats/Portal2/?tab=leaderboards&lb=${info.leaderboardId}`, function(data) {
+            console.log(data);
+        });
+    }
 }
 
 var timeChart;
@@ -75,7 +81,7 @@ var portalChart;
 
 var currentMap;
 
-function selectLevel(map, name) {
+function selectLevel(map, name, timeId, portalsId) {
     if (currentMap === map) return;
     currentMap = map;
 
@@ -144,13 +150,15 @@ function selectLevel(map, name) {
         type: "scatter",
         backgroundColor: "rgba(255, 159, 64, 0.2)",
         borderColor: "rgba(255, 159, 64, 1)",
-        cardId: "card-time"
+        cardId: "card-time",
+        leaderboardId: timeId
     });
     updateHistogram(`${prefix}portals_${map}.json`, portalChart, {
         type: "bar",
         backgroundColor: "rgba(54, 162, 235, 0.2)",
         borderColor: "rgba(54, 162, 235, 1)",
-        cardId: "card-portals"
+        cardId: "card-portals",
+        leaderboardId: portalsId
     });
 }
 
@@ -160,6 +168,7 @@ $("input[type=radio][name=mode-select]").change(function() {
 
 var currentMode;
 var currentStages;
+var currentPlayer;
 
 function showLevels(mode, callback) {
     if (currentMode === mode) {
@@ -203,7 +212,7 @@ function showLevels(mode, callback) {
                     `<button type="button"
                         class="btn btn-outline-secondary level-btn"
                         id="level-btn-${level.map}"
-                        onclick="selectLevel('${level.map}', '${level.name}'); return false;">
+                        onclick="selectLevel('${level.map}', '${level.name}', '${level.timeId}', '${level.portalsId}'); return false;">
                         ${level.name}
                     </button>`
                 );
@@ -216,8 +225,20 @@ function showLevels(mode, callback) {
     });
 }
 
-
 function onHashChange() {
+    var search = window.location.search;
+    if (search != null && search.length > 1){
+        var player = search.substr(1);
+
+        if (/\d+/.test(player)) {
+            currentPlayer = `profiles/${player}`;
+        } else {
+            currentPlayer = `id/${player}`;
+        }
+    } else {
+        currentPlayer = undefined;
+    }
+
     var hash = window.location.hash;
     if (hash == null || hash.length < 3) return false;
 
@@ -239,8 +260,10 @@ function onHashChange() {
 
             if (index === levels.length) continue;
 
+            var level = levels[index];
+
             $(`#card-collapse-${i}`).collapse("show");
-            selectLevel(map, levels[index].name);
+            selectLevel(map, level.name, level.timeId, level.portalsId);
 
             break;
         }
