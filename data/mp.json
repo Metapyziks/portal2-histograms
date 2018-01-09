@@ -1,0 +1,82 @@
+{
+    "stages": [
+        {
+            "title": "Team Building",
+            "levels": [
+                { "id": "mp_coop_doors", "name": "01 Doors" },
+                { "id": "mp_coop_race_2", "name": "02 Buttons" },
+                { "id": "mp_coop_laser_2", "name": "03 Lasers" },
+                { "id": "mp_coop_rat_maze", "name": "04 Rat Maze" },
+                { "id": "mp_coop_laser_crusher", "name": "05 Laser Crusher" },
+                { "id": "mp_coop_teambts", "name": "06 Behind the Scenes" }
+            ]
+        },
+        {
+            "title": "Mass and Velocity",
+            "levels": [
+                { "id": "mp_coop_fling_3", "name": "01 Flings" },
+                { "id": "mp_coop_infinifling_train", "name": "02 Infinifling" },
+                { "id": "mp_coop_come_along", "name": "03 Team Retrieval" },
+                { "id": "mp_coop_fling_1", "name": "04 Vertical Flings" },
+                { "id": "mp_coop_catapult_1", "name": "05 Catapults" },
+                { "id": "mp_coop_multifling_1", "name": "06 Multifling" },
+                { "id": "mp_coop_fling_crushers", "name": "07 Fling Crushers" },
+                { "id": "mp_coop_fan", "name": "08 Industrial Fan" }
+            ]
+        },
+        {
+            "title": "Hard-Light Surfaces",
+            "levels": [
+                { "id": "mp_coop_wall_intro", "name": "01 Cooperative Bridges" },
+                { "id": "mp_coop_wall_2", "name": "02 Bridge Swap" },
+                { "id": "mp_coop_catapult_wall_intro", "name": "03 Fling Block" },
+                { "id": "mp_coop_wall_block", "name": "04 Catapult Block" },
+                { "id": "mp_coop_catapult_2", "name": "05 Bridge Fling" },
+                { "id": "mp_coop_turret_walls", "name": "06 Turret Walls" },
+                { "id": "mp_coop_turret_ball", "name": "07 Turret Assassin" },
+                { "id": "mp_coop_wall_5", "name": "08 Bridge Testing" }
+            ]
+        },
+        {
+            "title": "Excursion Funnels",
+            "levels": [
+                { "id": "mp_coop_tbeam_redirect", "name": "01 Cooperative Funnels" },
+                { "id": "mp_coop_tbeam_drill", "name": "02 Funnel Drill" },
+                { "id": "mp_coop_tbeam_catch_grind_1", "name": "03 Funnel Catch" },
+                { "id": "mp_coop_tbeam_laser_1", "name": "04 Funnel Laser" },
+                { "id": "mp_coop_tbeam_polarity", "name": "05 Cooperative Polarity" },
+                { "id": "mp_coop_tbeam_polarity2", "name": "06 Funnel Hop" },
+                { "id": "mp_coop_tbeam_polarity3", "name": "07 Advanced Polarity" },
+                { "id": "mp_coop_tbeam_maze", "name": "08 Funnel Maze" },
+                { "id": "mp_coop_tbeam_end", "name": "09 Turret Warehouse" }
+            ]
+        },
+        {
+            "title": "Mobility Gels",
+            "levels": [
+                { "id": "mp_coop_paint_come_along", "name": "01 Repulsion Jumps" },
+                { "id": "mp_coop_paint_redirect", "name": "02 Double Bounce" },
+                { "id": "mp_coop_paint_bridge", "name": "03 Bridge Repulsion" },
+                { "id": "mp_coop_paint_walljumps", "name": "04 Wall Repulsion" },
+                { "id": "mp_coop_paint_speed_fling", "name": "05 Propulsion Crushers" },
+                { "id": "mp_coop_paint_red_racer", "name": "06 Turret Ninja" },
+                { "id": "mp_coop_paint_speed_catch", "name": "07 Propulsion Retrieval" },
+                { "id": "mp_coop_paint_longjump_intro", "name": "08 Vault Entrance" }
+            ]
+        },
+        {
+            "title": "Art Therapy",
+            "levels": [
+                { "id": "mp_coop_separation_1", "name": "01 Separation" },
+                { "id": "mp_coop_tripleaxis", "name": "02 Triple Axis" },
+                { "id": "mp_coop_catapult_catch", "name": "03 Catapult Catch" },
+                { "id": "mp_coop_2paints_1bridge", "name": "04 Bridge Gels" },
+                { "id": "mp_coop_paint_conversion", "name": "05 Maintenence" },
+                { "id": "mp_coop_bridge_catch", "name": "06 Bridge Catch" },
+                { "id": "mp_coop_laser_tbeam", "name": "07 Double Lift" },
+                { "id": "mp_coop_paint_rat_maze", "name": "08 Gel Maze" },
+                { "id": "mp_coop_paint_crazy_box", "name": "09 Crazier Box" }
+            ]
+        }
+    ]
+}

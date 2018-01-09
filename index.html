@@ -189,8 +189,8 @@
                 $("#title-time").text(`Time Taken - ${name}`);
                 $("#title-portals").text(`Portals - ${name}`);
 
-                updateHistogram(`${prefix}besttime_sp_${id}.json`, timeChart, "scatter");
-                updateHistogram(`${prefix}portals_sp_${id}.json`, portalChart, "bar");
+                updateHistogram(`${prefix}besttime_${id}.json`, timeChart, "scatter");
+                updateHistogram(`${prefix}portals_${id}.json`, portalChart, "bar");
             }
 
             function showLevels(stages) {
