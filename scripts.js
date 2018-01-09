@@ -60,8 +60,21 @@ function updateHistogram(url, chart, type)
 var timeChart;
 var portalChart;
 
+var currentLevelId;
+
 function selectLevel(id, name) {
+    if (currentLevelId === id) return;
+    currentLevelId = id;
+
     var prefix = "https://metapyziks.github.io/portal2-histograms/data/challenge_";
+
+    var newHash = `#${id}`;
+    if (window.location.hash !== newHash) {
+        window.location.hash = newHash;
+    }
+
+    $(".level-btn").removeClass("active");
+    $(`#level-btn-${id}`).addClass("active");
 
     if (timeChart == null) {
         timeChart = new Chart(document.getElementById("chart-time").getContext('2d'), {
@@ -116,44 +129,103 @@ function selectLevel(id, name) {
 
 $("input[type=radio][name=mode-select]").change(function() {
     showLevels(this.value);
-    console.log(this.value);
 });
 
-function showLevels(stages) {
-    $("#chapter-list").empty();
+var currentMode;
+var currentStages;
 
-    if (typeof stages === "string") {
-        $.getJSON(`https://metapyziks.github.io/portal2-histograms/data/${stages}.json`, data => {
-            showLevels(data.stages);
-        });
+function showLevels(mode, callback) {
+    if (currentMode === mode) {
+        if (callback != null) callback(currentStages);
         return;
     }
 
-    for (var i = 0; i < stages.length; ++i) {
-        var stage = stages[i];
+    currentMode = mode;
 
-        $("#chapter-list").append(`<div class="card">
-            <div class="card-header" role="tab" id="card-label-${i}" data-toggle="collapse" href="#card-collapse-${i}" role="button" aria-expanded="false" aria-controls="card-collapse-${i}">
-            <h5 class="mb-0">
-                ${stage.title}
-            </h5>
-            </div>
-            <div id="card-collapse-${i}" class="collapse" role="tabpanel" aria-labelledby="card-label-${i}" data-parent="#chapter-list">
-                <div class="card-body">
-                    <div class="btn-group-vertical level-list" id="level-list-${i}"></div>
-                </div>
-            </div>
-        </div>`);
-
-        for (var j = 0; j < stage.levels.length; ++j) {
-            var level = stage.levels[j];
-            $(`#level-list-${i}`).append(
-                `<button type="button"
-                    class="btn btn-outline-dark"
-                    onclick="selectLevel('${level.id}', '${level.name}'); return false;">
-                    ${level.name}
-                </button>`
-            );
-        }
+    if (callback != null) {
+        $(`.mode-select-${mode}`).prop("checked", "checked");
+        $(`.mode-select .btn`).removeClass("active");
+        $(`.mode-select-${mode}`).addClass("active");
     }
+
+    $("#chapter-list").empty();
+
+    $.getJSON(`https://metapyziks.github.io/portal2-histograms/data/${mode}.json`, data => {
+        $("#chapter-list").empty();
+
+        var stages = currentStages = data.stages;
+        for (var i = 0; i < stages.length; ++i) {
+            var stage = stages[i];
+
+            $("#chapter-list").append(`<div class="card">
+                <div class="card-header" role="tab" id="card-label-${i}" data-toggle="collapse" href="#card-collapse-${i}" role="button" aria-expanded="false" aria-controls="card-collapse-${i}">
+                <h5 class="mb-0">
+                    ${stage.title}
+                </h5>
+                </div>
+                <div id="card-collapse-${i}" class="collapse" role="tabpanel" aria-labelledby="card-label-${i}" data-parent="#chapter-list">
+                    <div class="card-body">
+                        <div class="btn-group-vertical level-list" id="level-list-${i}"></div>
+                    </div>
+                </div>
+            </div>`);
+
+            for (var j = 0; j < stage.levels.length; ++j) {
+                var level = stage.levels[j];
+                $(`#level-list-${i}`).append(
+                    `<button type="button"
+                        class="btn btn-outline-secondary level-btn"
+                        id="level-btn-${level.id}"
+                        onclick="selectLevel('${level.id}', '${level.name}'); return false;">
+                        ${level.name}
+                    </button>`
+                );
+            }
+        }
+
+        if (callback != null) {
+            callback(stages);
+        }
+    });
 }
+
+
+function onHashChange() {
+    var hash = window.location.hash;
+    if (hash == null || hash.length < 3) return false;
+
+    var mode = hash.substr(1, 2);
+
+    if (mode !== "sp" && mode !== "mp") return false;
+
+    showLevels(mode, function(stages) {
+        if (hash.length <= 3) return;
+        var mapId = hash.substr(1);
+
+        for (var i = 0; i < stages.length; ++i) {
+            var levels = stages[i].levels;
+            var index;
+
+            for (index = 0; index < levels.length; ++index) {
+                if (levels[index].id === mapId) break;
+            }
+
+            if (index === levels.length) continue;
+
+            $(`#card-collapse-${i}`).collapse("show");
+            selectLevel(mapId, levels[index].name);
+
+            break;
+        }
+    });
+
+    return true;
+}
+
+$(window).on("hashchange", onHashChange);
+
+$(function() {
+    if (!onHashChange()) {
+        showLevels("sp");
+    }
+});
