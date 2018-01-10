@@ -101,9 +101,13 @@ function selectLevel(map, name) {
                 },
                 tooltips: {
                     callbacks: {
+                        title: function (tooltipItems, data) {
+                            var date = new Date(tooltipItems[0].xLabel * 1000);
+                            return + date.getMinutes() + ':' + date.getSeconds() + '.' + date.getMilliseconds().toString().substr(0, 1);
+                        },
                         label: function (tooltipItems, data) {
                             var date = new Date(tooltipItems.xLabel * 1000);
-                            return + date.getMinutes() + ':' + date.getSeconds() + '.' + date.getMilliseconds().toString().substr(0,1) + ' - ' + tooltipItems.yLabel + ' times';
+                            return tooltipItems.yLabel + ' times';
                         }
                     },
                     custom: function (tooltip) {
