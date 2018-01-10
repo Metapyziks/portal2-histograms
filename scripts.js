@@ -103,7 +103,7 @@ function selectLevel(map, name) {
                     callbacks: {
                         title: function (tooltipItems, data) {
                             var date = new Date(tooltipItems[0].xLabel * 1000);
-                            return + date.getMinutes() + ':' + date.getSeconds() + '.' + date.getMilliseconds().toString().substr(0, 1);
+                            return + date.getMinutes() + ':' + ( '0' + date.getSeconds()).slice(-2) + '.' + date.getMilliseconds().toString().substr(0, 1);
                         },
                         label: function (tooltipItems, data) {
                             if (tooltipItems.yLabel != 1)
