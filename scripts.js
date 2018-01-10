@@ -93,6 +93,9 @@ function selectLevel(map, name) {
         timeChart = new Chart(document.getElementById("chart-time").getContext('2d'), {
             type: 'scatter',
             options: {
+                hover: {
+                    animationDuration: 1000
+                },
                 legend: {
                     display: false
                 },
@@ -125,6 +128,9 @@ function selectLevel(map, name) {
         portalChart = new Chart(document.getElementById("chart-portals").getContext('2d'), {
             type: 'bar',
             options: {
+                hover: {
+                    animationDuration: 1000
+                },
                 legend: {
                     display: false
                 },
