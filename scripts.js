@@ -70,7 +70,7 @@ function updateHistogram(url, chart, info)
     });
 
     if (currentPlayer != null) {
-        $.get(`http://steamcommunity.com/${currentPlayer}/stats/Portal2/?tab=leaderboards&lb=${info.leaderboardId}`, function(data) {
+        $.getJSON(`http://csgo.ziks.net/Leaderboard/Portal2/${info.leaderboardId}/${currentPlayer}`, function(data) {
             console.log(data);
         });
     }
@@ -276,13 +276,7 @@ function showLevels(mode, callback) {
 function onHashChange() {
     var search = window.location.search;
     if (search != null && search.length > 1){
-        var player = search.substr(1);
-
-        if (/\d+/.test(player)) {
-            currentPlayer = `profiles/${player}`;
-        } else {
-            currentPlayer = `id/${player}`;
-        }
+        currentPlayer = search.substr(1);
     } else {
         currentPlayer = undefined;
     }
