@@ -141,6 +141,17 @@ function selectLevel(map, name) {
                     display: false
                 },
                 tooltips: {
+                    callbacks: {
+                        title: function (tooltipItems, data) {
+                            if (tooltipItems[0].xLabel != 1)
+                                return tooltipItems[0].xLabel + ' portals';
+                            else
+                                return tooltipItems[0].xLabel + ' portal';
+                        },
+                        label: function (tooltipItems, data) {
+                            return data.datasets[tooltipItems.datasetIndex].label + ': ' + tooltipItems.yLabel + ' times';
+                        }
+                    },
                     mode: 'index',
                     intersect: false
                 },
