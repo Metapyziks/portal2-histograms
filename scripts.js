@@ -96,6 +96,10 @@ function selectLevel(map, name) {
                 legend: {
                     display: false
                 },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                },
                 scales: {
                     xAxes: [{
                         type: 'linear',
@@ -123,6 +127,10 @@ function selectLevel(map, name) {
             options: {
                 legend: {
                     display: false
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
                 },
                 scales: {
                     xAxes: [{
