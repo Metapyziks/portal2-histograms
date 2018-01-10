@@ -106,6 +106,10 @@ function selectLevel(map, name) {
                             return + date.getMinutes() + ':' + date.getSeconds() + '.' + date.getMilliseconds().toString().substr(0,1) + ' - ' + tooltipItems.yLabel + ' times';
                         }
                     },
+                    custom: function (tooltip) {
+                        if (!tooltip) return;
+                        tooltip.displayColors = false;
+                    },
                     mode: 'index',
                     intersect: false
                 },
@@ -151,6 +155,10 @@ function selectLevel(map, name) {
                         label: function (tooltipItems, data) {
                             return data.datasets[tooltipItems.datasetIndex].label + ': ' + tooltipItems.yLabel + ' times';
                         }
+                    },
+                    custom: function (tooltip) {
+                        if (!tooltip) return;
+                        tooltip.displayColors = false;
                     },
                     mode: 'index',
                     intersect: false
