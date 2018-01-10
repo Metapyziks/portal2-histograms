@@ -100,6 +100,12 @@ function selectLevel(map, name) {
                     display: false
                 },
                 tooltips: {
+                    callbacks: {
+                        label: function (tooltipItems, data) {
+                            var date = new Date(tooltipItems.xLabel * 1000);
+                            return + date.getMinutes() + ':' + date.getSeconds() + '.' + date.getMilliseconds().toString().substr(0,1) + ' - ' + tooltipItems.yLabel + ' times';
+                        }
+                    },
                     mode: 'index',
                     intersect: false
                 },
