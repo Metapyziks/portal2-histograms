@@ -106,8 +106,10 @@ function selectLevel(map, name) {
                             return + date.getMinutes() + ':' + date.getSeconds() + '.' + date.getMilliseconds().toString().substr(0, 1);
                         },
                         label: function (tooltipItems, data) {
-                            var date = new Date(tooltipItems.xLabel * 1000);
-                            return tooltipItems.yLabel + ' times';
+                            if (tooltipItems.yLabel != 1)
+                                return tooltipItems.yLabel + ' times';
+                            else
+                                return tooltipItems.yLabel + ' time';
                         }
                     },
                     custom: function (tooltip) {
@@ -157,7 +159,10 @@ function selectLevel(map, name) {
                                 return tooltipItems[0].xLabel + ' portal';
                         },
                         label: function (tooltipItems, data) {
-                            return tooltipItems.yLabel + ' times';
+                            if (tooltipItems.yLabel != 1)
+                                return tooltipItems.yLabel + ' times';
+                            else
+                                return tooltipItems.yLabel + ' time';
                         }
                     },
                     custom: function (tooltip) {
