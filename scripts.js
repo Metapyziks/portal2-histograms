@@ -157,7 +157,7 @@ function selectLevel(map, name) {
                                 return tooltipItems[0].xLabel + ' portal';
                         },
                         label: function (tooltipItems, data) {
-                            return data.datasets[tooltipItems.datasetIndex].label + ': ' + tooltipItems.yLabel + ' times';
+                            return tooltipItems.yLabel + ' times';
                         }
                     },
                     custom: function (tooltip) {
