@@ -107,9 +107,9 @@ function selectLevel(map, name) {
                         },
                         label: function (tooltipItems, data) {
                             if (tooltipItems.yLabel != 1)
-                                return tooltipItems.yLabel + ' times';
+                                return tooltipItems.yLabel + ' players';
                             else
-                                return tooltipItems.yLabel + ' time';
+                                return tooltipItems.yLabel + ' player';
                         }
                     },
                     custom: function (tooltip) {
@@ -160,9 +160,9 @@ function selectLevel(map, name) {
                         },
                         label: function (tooltipItems, data) {
                             if (tooltipItems.yLabel != 1)
-                                return tooltipItems.yLabel + ' times';
+                                return tooltipItems.yLabel + ' players';
                             else
-                                return tooltipItems.yLabel + ' time';
+                                return tooltipItems.yLabel + ' player';
                         }
                     },
                     custom: function (tooltip) {
