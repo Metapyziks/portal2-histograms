@@ -93,8 +93,29 @@ function selectLevel(map, name) {
         timeChart = new Chart(document.getElementById("chart-time").getContext('2d'), {
             type: 'scatter',
             options: {
+                hover: {
+                    animationDuration: 1000
+                },
                 legend: {
                     display: false
+                },
+                tooltips: {
+                    callbacks: {
+                        title: function (tooltipItems, data) {
+                            var date = new Date(tooltipItems[0].xLabel * 1000);
+                            return + date.getMinutes() + ':' + date.getSeconds() + '.' + date.getMilliseconds().toString().substr(0, 1);
+                        },
+                        label: function (tooltipItems, data) {
+                            var date = new Date(tooltipItems.xLabel * 1000);
+                            return tooltipItems.yLabel + ' times';
+                        }
+                    },
+                    custom: function (tooltip) {
+                        if (!tooltip) return;
+                        tooltip.displayColors = false;
+                    },
+                    mode: 'index',
+                    intersect: false
                 },
                 scales: {
                     xAxes: [{
@@ -121,8 +142,30 @@ function selectLevel(map, name) {
         portalChart = new Chart(document.getElementById("chart-portals").getContext('2d'), {
             type: 'bar',
             options: {
+                hover: {
+                    animationDuration: 1000
+                },
                 legend: {
                     display: false
+                },
+                tooltips: {
+                    callbacks: {
+                        title: function (tooltipItems, data) {
+                            if (tooltipItems[0].xLabel != 1)
+                                return tooltipItems[0].xLabel + ' portals';
+                            else
+                                return tooltipItems[0].xLabel + ' portal';
+                        },
+                        label: function (tooltipItems, data) {
+                            return tooltipItems.yLabel + ' times';
+                        }
+                    },
+                    custom: function (tooltip) {
+                        if (!tooltip) return;
+                        tooltip.displayColors = false;
+                    },
+                    mode: 'index',
+                    intersect: false
                 },
                 scales: {
                     xAxes: [{
