@@ -75,6 +75,30 @@ var portalChart;
 
 var currentMap;
 
+function getTooltipLabel(tooltipItems, data) {
+    dataset = data.datasets[0].data;
+    
+    var getter = (typeof dataset[0] === "number")
+    ? function (item) { return item; }
+    : function (item) { return item.y; };
+    
+    var totalCount = 0;
+    for (var i = 0; i < dataset.length; i++) {
+        totalCount += getter(dataset[i]);
+    }
+    var superiorPlayersTotalCount = 0;
+    for (var i = 0; i <= tooltipItems.index; i++) {
+        superiorPlayersTotalCount += getter(dataset[i]);
+    }
+    var labelText = [];
+    if (tooltipItems.yLabel != 1)
+        labelText.push(tooltipItems.yLabel + ' Players');
+    else
+        labelText.push(tooltipItems.yLabel + ' Player');
+    labelText.push('Top ' + Number(Math.round((superiorPlayersTotalCount * 100 / totalCount) + 'e2') + 'e-2') + '%');
+    return labelText;
+}
+
 function selectLevel(map, name) {
     if (currentMap === map) return;
     currentMap = map;
@@ -105,12 +129,7 @@ function selectLevel(map, name) {
                             var date = new Date(tooltipItems[0].xLabel * 1000);
                             return + date.getMinutes() + ':' + date.getSeconds() + '.' + date.getMilliseconds().toString().substr(0, 1);
                         },
-                        label: function (tooltipItems, data) {
-                            if (tooltipItems.yLabel != 1)
-                                return tooltipItems.yLabel + ' players';
-                            else
-                                return tooltipItems.yLabel + ' player';
-                        }
+                        label: getTooltipLabel
                     },
                     custom: function (tooltip) {
                         if (!tooltip) return;
@@ -154,16 +173,11 @@ function selectLevel(map, name) {
                     callbacks: {
                         title: function (tooltipItems, data) {
                             if (tooltipItems[0].xLabel != 1)
-                                return tooltipItems[0].xLabel + ' portals';
+                                return tooltipItems[0].xLabel + ' Portals';
                             else
-                                return tooltipItems[0].xLabel + ' portal';
+                                return tooltipItems[0].xLabel + ' Portal';
                         },
-                        label: function (tooltipItems, data) {
-                            if (tooltipItems.yLabel != 1)
-                                return tooltipItems.yLabel + ' players';
-                            else
-                                return tooltipItems.yLabel + ' player';
-                        }
+                        label: getTooltipLabel
                     },
                     custom: function (tooltip) {
                         if (!tooltip) return;
