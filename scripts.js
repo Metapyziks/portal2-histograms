@@ -5,7 +5,7 @@ function updateHistogram(url, chart, info)
     if (info.type === "bar") {
         chart.data.labels = [];
     }
-    
+
     chart.update();
 
     $.getJSON(url, data => {
@@ -68,6 +68,12 @@ function updateHistogram(url, chart, info)
 
         $(`#${info.cardId}`).collapse("show");
     });
+
+    if (currentPlayer != null) {
+        $.getJSON(`http://csgo.ziks.net/Leaderboard/Portal2/${info.leaderboardId}/${currentPlayer}`, function(data) {
+            console.log(data);
+        });
+    }
 }
 
 var timeChart;
@@ -99,7 +105,7 @@ function getTooltipLabel(tooltipItems, data) {
     return labelText;
 }
 
-function selectLevel(map, name) {
+function selectLevel(map, name, timeId, portalsId) {
     if (currentMap === map) return;
     currentMap = map;
 
@@ -127,7 +133,7 @@ function selectLevel(map, name) {
                     callbacks: {
                         title: function (tooltipItems, data) {
                             var date = new Date(tooltipItems[0].xLabel * 1000);
-                            return + date.getMinutes() + ':' + date.getSeconds() + '.' + date.getMilliseconds().toString().substr(0, 1);
+                            return + date.getMinutes() + ':' + ( '0' + date.getSeconds()).slice(-2) + '.' + date.getMilliseconds().toString().substr(0, 1);
                         },
                         label: getTooltipLabel
                     },
@@ -206,13 +212,15 @@ function selectLevel(map, name) {
         type: "scatter",
         backgroundColor: "rgba(255, 159, 64, 0.2)",
         borderColor: "rgba(255, 159, 64, 1)",
-        cardId: "card-time"
+        cardId: "card-time",
+        leaderboardId: timeId
     });
     updateHistogram(`${prefix}portals_${map}.json`, portalChart, {
         type: "bar",
         backgroundColor: "rgba(54, 162, 235, 0.2)",
         borderColor: "rgba(54, 162, 235, 1)",
-        cardId: "card-portals"
+        cardId: "card-portals",
+        leaderboardId: portalsId
     });
 }
 
@@ -222,6 +230,7 @@ $("input[type=radio][name=mode-select]").change(function() {
 
 var currentMode;
 var currentStages;
+var currentPlayer;
 
 function showLevels(mode, callback) {
     if (currentMode === mode) {
@@ -265,7 +274,7 @@ function showLevels(mode, callback) {
                     `<button type="button"
                         class="btn btn-outline-secondary level-btn"
                         id="level-btn-${level.map}"
-                        onclick="selectLevel('${level.map}', '${level.name}'); return false;">
+                        onclick="selectLevel('${level.map}', '${level.name}', '${level.timeId}', '${level.portalsId}'); return false;">
                         ${level.name}
                     </button>`
                 );
@@ -278,8 +287,14 @@ function showLevels(mode, callback) {
     });
 }
 
-
 function onHashChange() {
+    var search = window.location.search;
+    if (search != null && search.length > 1){
+        currentPlayer = search.substr(1);
+    } else {
+        currentPlayer = undefined;
+    }
+
     var hash = window.location.hash;
     if (hash == null || hash.length < 3) return false;
 
@@ -301,8 +316,10 @@ function onHashChange() {
 
             if (index === levels.length) continue;
 
+            var level = levels[index];
+
             $(`#card-collapse-${i}`).collapse("show");
-            selectLevel(map, levels[index].name);
+            selectLevel(map, level.name, level.timeId, level.portalsId);
 
             break;
         }
