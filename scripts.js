@@ -81,22 +81,19 @@ var portalChart;
 
 var currentMap;
 
+function add(a, b) {
+    return a + b;
+}
+
+function addy(a, b) {
+    return a + b.y;
+}
+
 function getTooltipLabel(tooltipItems, data) {
     dataset = data.datasets[0].data;
-    
-    var getter = (typeof dataset[0] === "number")
-    ? function (item) { return item; }
-    : function (item) { return item.y; };
-    
-    var totalCount = 0;
-    var superiorPlayersTotalCount = 0;
-    for (var i = 0; i < dataset.length; i++) {
-        numPlayers = getter(dataset[i]);
-        totalCount += numPlayers;
-        if (i <= tooltipItems.index) {
-            superiorPlayersTotalCount += numPlayers;
-        }
-    }
+    var addFunc = typeof dataset[0] === "number" ? add : addy;
+    var totalCount = dataset.reduce(addFunc, 0);
+    var superiorPlayersTotalCount = dataset.slice(0, tooltipItems.index).reduce(addFunc, 0);
     var labelText = [];
     if (tooltipItems.yLabel != 1)
         labelText.push(tooltipItems.yLabel + ' Players');
