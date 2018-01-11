@@ -189,9 +189,7 @@ function selectLevel(map, name, timeId, portalsId) {
                     custom: function (tooltip) {
                         if (!tooltip) return;
                         tooltip.displayColors = false;
-                    },
-                    mode: 'index',
-                    intersect: false
+                    }
                 },
                 scales: {
                     xAxes: [{
