@@ -93,7 +93,7 @@ function getTooltipLabel(tooltipItems, data) {
     dataset = data.datasets[0].data;
     var addFunc = typeof dataset[0] === "number" ? add : addy;
     var totalCount = dataset.reduce(addFunc, 0);
-    var superiorPlayersTotalCount = dataset.slice(0, tooltipItems.index).reduce(addFunc, 0);
+    var superiorPlayersTotalCount = dataset.slice(0, tooltipItems.index + 1).reduce(addFunc, 0);
     var labelText = [];
     if (tooltipItems.yLabel != 1)
         labelText.push(tooltipItems.yLabel + ' Players');
