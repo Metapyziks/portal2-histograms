@@ -89,12 +89,13 @@ function getTooltipLabel(tooltipItems, data) {
     : function (item) { return item.y; };
     
     var totalCount = 0;
-    for (var i = 0; i < dataset.length; i++) {
-        totalCount += getter(dataset[i]);
-    }
     var superiorPlayersTotalCount = 0;
-    for (var i = 0; i <= tooltipItems.index; i++) {
-        superiorPlayersTotalCount += getter(dataset[i]);
+    for (var i = 0; i < dataset.length; i++) {
+        numPlayers = getter(dataset[i]);
+        totalCount += numPlayers;
+        if (i <= tooltipItems.index) {
+            superiorPlayersTotalCount += numPlayers;
+        }
     }
     var labelText = [];
     if (tooltipItems.yLabel != 1)
