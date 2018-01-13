@@ -294,7 +294,9 @@ function onHashChange() {
     }
 
     var hash = window.location.hash;
-    if (hash == null || hash.length < 3) return false;
+    if (hash == null || hash.length < 3) {
+        hash = "#sp";
+    }
 
     var mode = hash.substr(1, 2);
 
