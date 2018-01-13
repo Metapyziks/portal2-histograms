@@ -70,7 +70,7 @@ function updateHistogram(url, chart, info)
     });
 
     if (currentPlayer != null) {
-        $.getJSON(`http://csgo.ziks.net/Leaderboard/Portal2/${info.leaderboardId}/${currentPlayer}`, function(data) {
+        $.getJSON(`https://retakes.ziks.net/Leaderboard/Portal2/${info.leaderboardId}/${currentPlayer}`, function(data) {
             console.log(data);
         });
     }
