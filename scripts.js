@@ -303,7 +303,10 @@ function onHashChange() {
     if (mode !== "sp" && mode !== "mp") return false;
 
     showLevels(mode, function(stages) {
-        if (hash.length <= 3) return;
+        if (hash.length <= 3) {
+            hash = `#${stages[0].levels[0].map}`;
+        }
+
         var map = hash.substr(1);
 
         for (var i = 0; i < stages.length; ++i) {
