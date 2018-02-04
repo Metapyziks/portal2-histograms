@@ -36,3 +36,11 @@ canvas {
 th, td {
     text-align: center;
 }
+
+tr.table-active {
+    font-weight: bold;
+}
+
+tr .tr-hidden {
+    display: none;
+}

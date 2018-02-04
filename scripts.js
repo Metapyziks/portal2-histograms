@@ -1,3 +1,8 @@
+function isCurrentPlayerEntry(entry)
+{
+    return  entry.profileUrl.toLowerCase().endsWith(`/${currentPlayer.toLowerCase()}`);
+}
+
 function updateHistogram(url, chart, info)
 {
     chart.data.datasets = [];
@@ -72,21 +77,28 @@ function updateHistogram(url, chart, info)
     $(`#${info.cardId} .card .table`).hide();
 
     if (currentPlayer != null) {
-        $.getJSON(`https://metapy.ziks.net/Leaderboard/Portal2/${info.leaderboardId}/${currentPlayer}`, function(data) {
-            var table = $(`#${info.cardId} .card .table`);
-            var tbody = table.find("tbody");
+        var table = $(`#${info.cardId} .card .table`);
+        var tbody = table.find("tbody");
 
+        function populateTable(data, condition) {
             tbody.empty();
 
             var lastScore = -1;
 
             for (var i = 0; i < data.entries.length; ++i) {
                 var entry = data.entries[i];
+
+                if (condition != null && !condition(entry, i)) continue;
+
                 var score = info.scoreFormat == null ? entry.score.toString() : info.scoreFormat(entry.score);
-                var selected = entry.profileUrl.toLowerCase().endsWith(`/${currentPlayer.toLowerCase()}`);
+                var selected = isCurrentPlayerEntry(entry);
+
+                var classes = "";
+
+                if (selected) classes = "table-active";
 
                 tbody.append(`
-                    <tr${selected ? " class=\"table-active\"" : ""}${selected ? " style=\"font-weight: bold;\"" : ""}>
+                    <tr class=\"${classes}\"">
                         <${entry.score === lastScore ? "td" : "th scope=\"row\""}>${entry.score === lastScore ? "=" : entry.relativeRank}</th>
                         <td><a href="${entry.profileUrl}">${entry.playerName}</a></td>
                         <td>${score}</td>
@@ -95,7 +107,21 @@ function updateHistogram(url, chart, info)
 
                 lastScore = entry.score;
             }
+        }
 
+        $.getJSON(`https://metapy.ziks.net/Leaderboard/Portal2/${info.leaderboardId}/${currentPlayer}`, function(data) {
+            var currentPlayerIndex = 0;
+            for (var i = 0; i < data.entries.length; ++i) {
+                var entry = data.entries[i];
+                if (isCurrentPlayerEntry(entry)) {
+                    currentPlayerIndex = i;
+                    break;
+                }
+            }
+
+            populateTable(data, function(entry, i) {
+                return currentPlayerIndex < 2 ? i < 3 : (i === currentPlayerIndex || i === currentPlayerIndex - 1 || i === 0);
+            });
             table.show();
         });
     }
