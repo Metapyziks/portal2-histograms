@@ -69,9 +69,33 @@ function updateHistogram(url, chart, info)
         $(`#${info.cardId}`).collapse("show");
     });
 
+    $(`#${info.cardId} .card .table`).hide();
+
     if (currentPlayer != null) {
         $.getJSON(`https://metapy.ziks.net/Leaderboard/Portal2/${info.leaderboardId}/${currentPlayer}`, function(data) {
-            console.log(data);
+            var table = $(`#${info.cardId} .card .table`);
+            var tbody = table.find("tbody");
+
+            tbody.empty();
+
+            var lastScore = -1;
+
+            for (var i = 0; i < data.entries.length; ++i) {
+                var entry = data.entries[i];
+                var score = info.scoreFormat == null ? entry.score.toString() : info.scoreFormat(entry.score);
+
+                tbody.append(`
+                    <tr>
+                        <${entry.score === lastScore ? "td" : "th scope=\"row\""}>${entry.score === lastScore ? "=" : entry.relativeRank}</th>
+                        <td>${entry.playerName}</td>
+                        <td>${score}</td>
+                    </tr>
+                `);
+
+                lastScore = entry.score;
+            }
+
+            table.show();
         });
     }
 }
@@ -151,7 +175,7 @@ function selectLevel(map, name, timeId, portalsId) {
                             callback: function(value, index, values) {
                                 var mins = Math.floor(value / 60);
                                 var secs = Math.floor(value - mins * 60);
-                                return (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs;
+                                return mins + ':' + (secs < 10 ? '0' : '') + secs;
                             }
                         }
                     }],
@@ -211,7 +235,13 @@ function selectLevel(map, name, timeId, portalsId) {
         backgroundColor: "rgba(255, 159, 64, 0.2)",
         borderColor: "rgba(255, 159, 64, 1)",
         cardId: "card-time",
-        leaderboardId: timeId
+        leaderboardId: timeId,
+        scoreFormat: function(score) { 
+            var secs = score / 100;
+            var mins = Math.floor(secs / 60);
+            secs -= mins * 60;
+            return mins + ':' + (secs < 10 ? '0' : '') + secs.toFixed(2);
+        }
     });
     updateHistogram(`${prefix}portals_${map}.json`, portalChart, {
         type: "bar",
