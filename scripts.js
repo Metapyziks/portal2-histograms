@@ -86,9 +86,9 @@ function updateHistogram(url, chart, info)
                 var selected = entry.profileUrl.toLowerCase().endsWith(`/${currentPlayer.toLowerCase()}`);
 
                 tbody.append(`
-                    <tr${selected ? " class=\"table-active\"" : ""}>
+                    <tr${selected ? " class=\"table-active\"" : ""}${selected ? " style=\"font-weight: bold;\"" : ""}>
                         <${entry.score === lastScore ? "td" : "th scope=\"row\""}>${entry.score === lastScore ? "=" : entry.relativeRank}</th>
-                        <td${selected ? " style=\"font-weight: bold;\"" : ""}><a href="${entry.profileUrl}">${entry.playerName}</a></td>
+                        <td><a href="${entry.profileUrl}">${entry.playerName}</a></td>
                         <td>${score}</td>
                     </tr>
                 `);
