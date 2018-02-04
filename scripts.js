@@ -88,7 +88,7 @@ function updateHistogram(url, chart, info)
                 tbody.append(`
                     <tr${selected ? " class=\"table-active\"" : ""}>
                         <${entry.score === lastScore ? "td" : "th scope=\"row\""}>${entry.score === lastScore ? "=" : entry.relativeRank}</th>
-                        <td><a href="${entry.profileUrl}">${entry.playerName}</a></td>
+                        <td${selected ? " style=\"font-weight: bold;\"" : ""}><a href="${entry.profileUrl}">${entry.playerName}</a></td>
                         <td>${score}</td>
                     </tr>
                 `);
